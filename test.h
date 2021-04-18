@@ -11,8 +11,8 @@ class Test{
     vector<Worker> workerList;
 public:
     vector<int> get_IDs();
-    void printIDs();
     vector<Worker> get_workerList();
+    void printIDs();
     void printWorkers();
 
     int testing();
@@ -22,6 +22,7 @@ public:
     void popWorker(int id);
     pair<Worker, int> chooseWorker();
     void workerActions();
+    void testingWorkerOperator();
 };
 
 #endif

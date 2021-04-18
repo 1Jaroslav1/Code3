@@ -7,7 +7,7 @@ string Worker::get_name(){
     return name;
 }
 
-void Worker::set_name(string &newName){
+void Worker::set_name(string newName){
     name = newName;
 }
 
@@ -15,7 +15,7 @@ string Worker::get_surname(){
     return surname;
 }
 
-void Worker::set_surname(string &newSurname){
+void Worker::set_surname(string newSurname){
     surname = newSurname;
 }
 
@@ -23,7 +23,7 @@ string Worker::get_jobPosition(){
     return jobPosition;
 }
 
-void Worker::set_jobPosition(string &newJobPosition){
+void Worker::set_jobPosition(string newJobPosition){
     jobPosition = newJobPosition;
 }
 
@@ -31,7 +31,7 @@ int Worker::get_id(){
     return id;
 }
 
-void Worker::set_id(int &newId){
+void Worker::set_id(int newId){
     id = newId;
 }
 
@@ -39,7 +39,7 @@ int Worker::get_salary(){
     return salary;
 }
 
-void Worker::set_salary(int &newSalary){
+void Worker::set_salary(int newSalary){
     salary = newSalary;
 }
 
@@ -61,12 +61,12 @@ void Worker::pop_customer(){
 //======================================================================
 
 bool Worker::operator==(const Worker &w){
-    if(w.id == id && w.name == name && w.surname == surname)
+    if(w.name == name && w.surname == surname && w.jobPosition == jobPosition && w.id == id && w.salary == salary)
         return true;
     return false;
 }
 bool Worker::operator!=(const Worker &w){
-    if(w.id != id || w.name != name || w.surname != surname)
+    if(w.id != id || w.name != name || w.surname != surname || w.jobPosition != jobPosition || w.salary != salary)
         return true;
     return false;
 }

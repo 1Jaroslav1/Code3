@@ -9,6 +9,7 @@ void Test::printIDs(){
     for(long long unsigned int i = 0; i < IDs.size()-1; i++)
         cout << IDs[i] << endl;
 }
+
 vector<Worker> Test::get_workerList(){
     return workerList;
 }
@@ -23,10 +24,10 @@ void Test::addWorker(Worker newWorker){
 }
 
 int Test::testing(){
-    enum staringAction{end=0, creatingWorker, deleteWorker, action_with_Worker, coutWorkers, coutIDs, getWorkersFromFile, pushWorkersToFile};
-    string actionMessage =  " end the program - 0\n create new worker write - 1\n delete worker - 2\n do some actions with workers write - 3\n print all workers - 4\n print IDs - 5\n get workers from file - 6\n push workers to file - 7\n Write: ";
+    enum staringAction{end=0, creatingWorker, deleteWorker, action_with_Worker, coutWorkers, coutIDs, getWorkersFromFile, pushWorkersToFile, workerOperators};
+    string actionMessage =  " end the program - 0\n create new worker write - 1\n delete worker - 2\n do some actions with workers write - 3\n print all workers - 4\n print IDs - 5\n get workers from file - 6\n push workers to file - 7\n test operators ==, !=, =: - 8\n Write: ";
     string actionErrorMessage = "Invalid action input!";
-    int action = inputActionVal(actionMessage, actionErrorMessage, -1, 8);
+    int action = inputActionVal(actionMessage, actionErrorMessage, -1, 9);
 
     cout << endl;
 
@@ -76,6 +77,7 @@ int Test::testing(){
             Worker w(name, surname, jobPosition, id, salary);
             addWorker(w);
         }
+        IDs[IDs.size() - 1]++;
         break;
     }
     case pushWorkersToFile:{
@@ -94,6 +96,10 @@ int Test::testing(){
         }
 
         writeToFile(file, workers);
+        break;
+    }
+    case workerOperators:{
+        testingWorkerOperator();
         break;
     }
     case end:{
@@ -247,7 +253,58 @@ void Test::workerActions(){
         }
         cout << endl;
     }
+    // Work operator =
     workerList[workerPair.second] = worker;
 
     cout << "End working with worker" << "\n\n";
+}
+
+void Test::testingWorkerOperator(){
+    cout << "Firstly let's create clone of some worker(After ending testing worker operators clon die!!!)\n\n";
+
+    auto workerPair = chooseWorker();
+    Worker worker = workerPair.first;
+    // Work copy constructor
+    Worker clone = worker;
+
+    enum operatorActions{end, equal, notEqual};
+    string actionMessage = "You can:\n end working with this section - 0\n check that employee are equal to clone - 1\n check that employee are not equal to clone - 2\n Write: ";
+    string actionErrorMessage = "Invalid action input!";
+    bool endSection = false;
+
+    while(!endSection){
+        int action = inputActionVal(actionMessage, actionErrorMessage, -1, 3);
+        cout << endl;
+        switch (action)
+        {
+        case end:{
+            endSection = true;
+            break;
+        }
+        case equal:{
+            Worker w = chooseWorker().first;
+            if(w == clone){
+                cout << "True. This worker is the same as a clone" << endl;
+            }
+            else{
+                cout <<  "False. This worker is not the same as a clone" << endl;
+            }
+            break;
+        }
+        case notEqual:{
+            Worker w = chooseWorker().first;
+            if(w != clone){
+                cout <<  "True. This worker is not the same as a clone" << endl;
+            }
+            else{
+                cout << "False. This worker is the same as a clone" << endl;
+            }
+            break;
+        }
+        default:
+            break;
+        }
+    }
+
+    cout << "End working with section" << "\n\n";
 }
