@@ -7,7 +7,7 @@
 #include <utility>
 
 class Test{
-    vector<int> IDs = {1242453};
+    vector<int> IDs;
     vector<Worker> workerList;
 public:
     vector<int> get_IDs();
@@ -21,8 +21,11 @@ public:
     void addWorker(Worker newWorker);
     void popWorker(int id);
     pair<Worker, int> chooseWorker();
+
     void workerActions();
     void testingWorkerOperator();
+    void readFile(string file);
+    void writeFile(string file);
 };
 
 #endif

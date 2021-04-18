@@ -75,3 +75,19 @@ string inputStrVal(string message){
     cout << endl;
     return val;
 }
+
+int inputIdVal(vector<int> IDs){
+    int id;
+    bool exit = false;
+    while(!exit){
+        id = inputIntVal("Write id of new worker: ", "Invalid input! The id must be positive integer");
+        exit = true;
+        for(long long unsigned i = 0; i < IDs.size(); i++){
+            if(id == IDs[i]){
+                cout << "ID: " << id << " already exist. Try another one" << endl;
+                exit = false;
+            }
+        }
+    }
+    return id;
+}

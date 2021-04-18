@@ -6,7 +6,7 @@ vector<int> Test::get_IDs(){
 }
 
 void Test::printIDs(){
-    for(long long unsigned int i = 0; i < IDs.size()-1; i++)
+    for(long long unsigned int i = 0; i < IDs.size(); i++)
         cout << IDs[i] << endl;
 }
 
@@ -63,39 +63,11 @@ int Test::testing(){
         break;
     }
     case getWorkersFromFile:{
-        string file = "workers.csv";
-        vector<vector<string>> workers = readFromFile(file);
-        for(auto worker: workers){
-            string name = worker[0];
-            string surname = worker[1];
-            string jobPosition = worker[2];
-            int salary = convertToInt(worker[3]);
-            int id = convertToInt(worker[4]);
-
-            IDs.push_back(id);
-
-            Worker w(name, surname, jobPosition, id, salary);
-            addWorker(w);
-        }
-        IDs[IDs.size() - 1]++;
+        readFile("workers.csv");
         break;
     }
     case pushWorkersToFile:{
-        string file = "workers.csv";
-
-        vector<vector<string>> workers;
-        for(auto w: workerList){
-            vector<string> worker;
-            worker.push_back(w.get_name());
-            worker.push_back(w.get_surname());
-            worker.push_back(w.get_jobPosition());
-            worker.push_back(to_string(w.get_salary()));
-            worker.push_back(to_string(w.get_id()));
-
-            workers.push_back(worker);
-        }
-
-        writeToFile(file, workers);
+        writeFile("workers.csv");
         break;
     }
     case workerOperators:{
@@ -114,7 +86,7 @@ int Test::testing(){
 Worker Test::createWorker(){
     cout << "Creating new worker\n";
     string name, surname, jobPosition;
-    int salary;
+    int id, salary;
     cout << "Write name of new worker: ";
     cin >> name;
     cout << "Write surname of new worker: ";
@@ -122,9 +94,9 @@ Worker Test::createWorker(){
     cout << "Write jobPosition of new worker: ";
     cin >> jobPosition;
     salary = inputIntVal("Write salary of new worker: ", "Invalid input! The salary must be positive integer");
+    id = inputIdVal(IDs);
 
-    int id = IDs.back();
-    IDs.push_back(id+1);
+    IDs.push_back(id);
 
     Worker new_w(name, surname, jobPosition, id, salary);
     return new_w;
@@ -307,4 +279,36 @@ void Test::testingWorkerOperator(){
     }
 
     cout << "End working with section" << "\n\n";
+}
+
+void Test::readFile(string file){
+    vector<vector<string>> workers = readFromFile(file);
+    for(auto worker: workers){
+        string name = worker[0];
+        string surname = worker[1];
+        string jobPosition = worker[2];
+        int salary = convertToInt(worker[3]);
+        int id = convertToInt(worker[4]);
+
+        IDs.push_back(id);
+
+        Worker w(name, surname, jobPosition, id, salary);
+        addWorker(w);
+    }
+}
+
+void Test::writeFile(string file){
+    vector<vector<string>> workers;
+    for(auto w: workerList){
+        vector<string> worker;
+        worker.push_back(w.get_name());
+        worker.push_back(w.get_surname());
+        worker.push_back(w.get_jobPosition());
+        worker.push_back(to_string(w.get_salary()));
+        worker.push_back(to_string(w.get_id()));
+
+        workers.push_back(worker);
+    }
+
+    writeToFile(file, workers);
 }
